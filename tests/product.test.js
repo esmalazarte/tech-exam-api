@@ -16,6 +16,8 @@ describe('Product Inventory API Tests', () => {
 
   // Close connection after all tests
   afterAll(async () => {
+    await Product.deleteMany();
+    await User.deleteMany();
     await mongoose.connection.close();
   });
 

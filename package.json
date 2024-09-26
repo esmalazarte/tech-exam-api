@@ -4,7 +4,7 @@
   "description": "Technical Exam for API Developer",
   "main": "server.js",
   "scripts": {
-    "test": "cross-env NODE_ENV=test jest --detectOpenHandles --forceExit",
+    "test": "cross-env NODE_ENV=test jest --detectOpenHandles --forceExit --verbose",
     "start": "cross-env NODE_ENV=dev node server.js"
   },
   "keywords": [],
