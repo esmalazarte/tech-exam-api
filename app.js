@@ -1,20 +1,23 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 const productRoutes = require('./routes/productRoutes');
+
+dotenv.config();
 
 const app = express();
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
-// Define server constants
-const PORT = 3000;
+// Connect to MongoDB
+if (process.env.NODE_ENV == 'test') {
+    mongoose.connect(process.env.TEST_DATABASE_URI);
+} else {
+    mongoose.connect(process.env.DATABASE_URI);
+}
+
+// Use /v1/product as base endpoint
 const BASE_ENDPOINT = '/v1/product';
-const DB_PATH = 'mongodb://127.0.0.1:27017/techExamDB';
-
-// Connect to local MongoDB
-mongoose.connect(DB_PATH);
-
-// Use base endpoint
 app.use(BASE_ENDPOINT, productRoutes);
 
 // Server error handler
@@ -22,7 +25,4 @@ app.use((err, req, res, next) => {
     res.status(500).json({error: err.message});
 })
 
-// Start server
-app.listen(PORT, () => {
-    console.log('Server running on port ' + PORT);
-})
+module.exports = app;
