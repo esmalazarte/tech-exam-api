@@ -40,23 +40,23 @@ See Authentication section below for API token
 - Request Body:
 ```json
 {
-    name: "Product Name",
-    description: "Product Description",
-    type: "food",
-    quantity: 10,
-    unitPrice: 200
+    "name": "Product Name",
+    "description": "Product Description",
+    "type": "food",
+    "quantity": 10,
+    "unitPrice": 200
 }
 ```
 - Response:
 ```json
 {
-    _id: "66f4fc335a733bedece9da14",
-    name: "Product Name",
-    description: "Product Description",
-    type: "food",
-    quantity: 10,
-    unitPrice: 200,
-    __v: 0
+    "_id": "66f4fc335a733bedece9da14",
+    "name": "Product Name",
+    "description": "Product Description",
+    "type": "food",
+    "quantity": 10,
+    "unitPrice": 200,
+    "__v": 0
 }
 ```
 
@@ -66,13 +66,13 @@ See Authentication section below for API token
 ```json
 [
     {
-        _id: "66f4fc335a733bedece9da14",
-        name: "Product Name",
-        description: "Product Description",
-        type: "food",
-        quantity: 10,
-        unitPrice: 200,
-        __v: 0
+        "_id": "66f4fc335a733bedece9da14",
+        "name": "Product Name",
+        "description": "Product Description",
+        "type": "food",
+        "quantity": 10,
+        "unitPrice": 200,
+        "__v": 0
     },
     ...
 ]
@@ -83,13 +83,13 @@ See Authentication section below for API token
 - Response:
 ```json
 {
-    _id: "66f4fc335a733bedece9da14",
-    name: "Product Name",
-    description: "Product Description",
-    type: "food",
-    quantity: 10,
-    unitPrice: 200,
-    __v: 0
+    "_id": "66f4fc335a733bedece9da14",
+    "name": "Product Name",
+    "description": "Product Description",
+    "type": "food",
+    "quantity": 10,
+    "unitPrice": 200,
+    "__v": 0
 }
 ```
 
@@ -98,23 +98,23 @@ See Authentication section below for API token
 - Request Body:
 ```json
 {
-    name: "Updated Product Name",
-    description: "Updated Product Description",
-    type: "music",
-    quantity: 15,
-    unitPrice: 500
+    "name": "Updated Product Name",
+    "description": "Updated Product Description",
+    "type": "music",
+    "quantity": 15,
+    "unitPrice": 500
 }
 ```
 - Response:
 ```json
 {
-    _id: "66f4fc335a733bedece9da14",
-    name: "Updated Product Name",
-    description: "Updated Product Description",
-    type: "music",
-    quantity: 15,
-    unitPrice: 500,
-    __v: 0
+    "_id": "66f4fc335a733bedece9da14",
+    "name": "Updated Product Name",
+    "description": "Updated Product Description",
+    "type": "music",
+    "quantity": 15,
+    "unitPrice": 500,
+    "__v": 0
 }
 ```
 
@@ -123,7 +123,7 @@ See Authentication section below for API token
 - Response:
 ```json
 {
-    message: "Product deleted successfully"
+    "message": "Product deleted successfully"
 }
 ```
 
@@ -134,19 +134,19 @@ See Authentication section below for API token
 - Request Body:
 ```json
 {
-    username: "username",
-    password: "password"
+    "username": "username",
+    "password": "password"
 }
 ```
 - Response:
 ```json
 {
-    message: "User registered successfully",
-    user: {
-        _id: "66f4fc335a733bedece9da15",
-        username: "username",
-        password: "$2a$10$L306e6M7vlKoWqLG2U/AJOLtwpW.jyYI/FRSzVKcyAIoD1wG3pMV6",
-        __v: 0
+    "message": "User registered successfully",
+    "user": {
+        "_id": "66f4fc335a733bedece9da15",
+        "username": "username",
+        "password": "$2a$10$L306e6M7vlKoWqLG2U/AJOLtwpW.jyYI/FRSzVKcyAIoD1wG3pMV6",
+        "__v": 0
     }
 }
 ```
@@ -156,15 +156,15 @@ See Authentication section below for API token
 - Request Body:
 ```json
 {
-    username: "username",
-    password: "password"
+    "username": "username",
+    "password": "password"
 }
 ```
 - Response:
 ```json
 {
-    message: "User logged in successfully",
-    token: "<token>"
+    "message": "User logged in successfully",
+    "token": "<token>"
 }
 ```
 
