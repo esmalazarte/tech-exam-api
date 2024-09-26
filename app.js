@@ -9,10 +9,6 @@ const app = express();
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
-// Define server constants
-const PORT = 3000;
-const BASE_ENDPOINT = '/v1/product';
-
 // Connect to MongoDB
 if (process.env.NODE_ENV == 'test') {
     mongoose.connect(process.env.TEST_DATABASE_URI);
@@ -20,17 +16,13 @@ if (process.env.NODE_ENV == 'test') {
     mongoose.connect(process.env.DATABASE_URI);
 }
 
-// Use base endpoint
+// Use /v1/product as base endpoint
+const BASE_ENDPOINT = '/v1/product';
 app.use(BASE_ENDPOINT, productRoutes);
 
 // Server error handler
 app.use((err, req, res, next) => {
     res.status(500).json({error: err.message});
-})
-
-// Start server
-app.listen(PORT, () => {
-    console.log('Server running on port ' + PORT);
 })
 
 module.exports = app;
