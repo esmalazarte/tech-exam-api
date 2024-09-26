@@ -28,7 +28,7 @@ exports.loginUser = async (req, res) => {
             if (matched) {
                 // Generate token and return
                 const token = jwt.sign({id: user._id, username: user.username}, process.env.SECRET_KEY, {expiresIn: '1h'});
-                res.status(200).json({token: token});
+                res.status(200).json({message: 'User logged in successfully', token: token});
             } else {
                 res.status(400).json({error: 'Incorrect password'});
             }
