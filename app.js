@@ -2,6 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const productRoutes = require('./routes/productRoutes');
+const userRoutes = require('./routes/userRoutes');
+const authMiddleware = require('./middleware/authMiddleware');
 
 dotenv.config();
 
@@ -16,9 +18,13 @@ if (process.env.NODE_ENV == 'test') {
     mongoose.connect(process.env.DATABASE_URI);
 }
 
-// Use /v1/product as base endpoint
+// Set endpoints
+const AUTH_ENDPOINT = '/auth';
 const BASE_ENDPOINT = '/v1/product';
-app.use(BASE_ENDPOINT, productRoutes);
+
+// Use endpoints and middleware
+app.use(AUTH_ENDPOINT, userRoutes);
+app.use(BASE_ENDPOINT, authMiddleware, productRoutes);
 
 // Server error handler
 app.use((err, req, res, next) => {

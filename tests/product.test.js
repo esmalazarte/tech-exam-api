@@ -2,24 +2,59 @@ const request = require('supertest');
 const app = require('../app');
 const mongoose = require('mongoose');
 const Product = require('../models/productModel');
+const User = require('../models/userModel');
+
+let token = ''
 
 describe('Product Inventory API Tests', () => {
 
   // Clean up database before starting tests
   beforeAll(async () => {
     await Product.deleteMany();
+    await User.deleteMany();
   });
 
   // Close connection after all tests
   afterAll(async () => {
+    await Product.deleteMany();
+    await User.deleteMany();
     await mongoose.connection.close();
   });
 
+  // Test for registering user
+  test('Should register a new user', async () => {
+    const response = await request(app)
+      .post('/auth/register')
+      .send({
+        username: 'admin',
+        password: 'password',
+      });
+
+    expect(response.statusCode).toBe(201);
+    expect(response.body.message).toBe('User registered successfully');
+  });
+
+  // Test for logging in
+  test('Should login and return a token', async () => {
+    const response = await request(app)
+      .post('/auth/login')
+      .send({
+        username: 'admin',
+        password: 'password',
+      });
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toHaveProperty('token');
+
+    // Save the token for tests below
+    token = response.body.token;
+  });
 
   // Test for creating a valid product
   test('Should create a new product', async () => {
     const response = await request(app)
       .post('/v1/product')
+      .set('Authorization', `Bearer ${token}`)
       .send({
         name: 'Hatdog',
         description: 'Tender Juicy Hatdog',
@@ -36,6 +71,7 @@ describe('Product Inventory API Tests', () => {
   test('Should fail to create an invalid product', async () => {
     const response = await request(app)
       .post('/v1/product')
+      .set('Authorization', `Bearer ${token}`)
       .send({
         name: 'Kornbip',
         description: 'Argentina Kornbip',
@@ -52,6 +88,7 @@ describe('Product Inventory API Tests', () => {
   test('Should get all products', async () => {
     const response = await request(app)
       .get('/v1/product')
+      .set('Authorization', `Bearer ${token}`)
 
     expect(response.statusCode).toBe(200);
     expect(response.body.length).toBeGreaterThan(0);
@@ -65,6 +102,7 @@ describe('Product Inventory API Tests', () => {
 
     const response = await request(app)
       .get(`/v1/product/${productId}`)
+      .set('Authorization', `Bearer ${token}`)
 
     expect(response.statusCode).toBe(200);
     expect(response.body).toHaveProperty('name', 'Hatdog');
@@ -76,6 +114,7 @@ describe('Product Inventory API Tests', () => {
 
     const response = await request(app)
       .get(`/v1/product/${productId}`)
+      .set('Authorization', `Bearer ${token}`)
 
     expect(response.statusCode).toBe(404);
     expect(response.body).toHaveProperty('error');
@@ -88,6 +127,7 @@ describe('Product Inventory API Tests', () => {
 
     const response = await request(app)
       .put(`/v1/product/${productId}`)
+      .set('Authorization', `Bearer ${token}`)
       .send({
         name: 'Cheesy Hatdog',
         description: 'Tender Juicy Hatdog with Cheese',
@@ -107,6 +147,7 @@ describe('Product Inventory API Tests', () => {
 
     const response = await request(app)
       .put(`/v1/product/${productId}`)
+      .set('Authorization', `Bearer ${token}`)
       .send({
         name: 'Kornbip',
         description: 'Argentina Kornbip',
@@ -124,6 +165,7 @@ describe('Product Inventory API Tests', () => {
 
     const response = await request(app)
       .delete(`/v1/product/${productId}`)
+      .set('Authorization', `Bearer ${token}`)
 
     expect(response.statusCode).toBe(200);
     expect(response.body).toHaveProperty('message', 'Product deleted successfully');
@@ -139,6 +181,7 @@ describe('Product Inventory API Tests', () => {
 
     const response = await request(app)
       .delete(`/v1/product/${productId}`)
+      .set('Authorization', `Bearer ${token}`)
 
     expect(response.statusCode).toBe(404);
     expect(response.body).toHaveProperty('error');
